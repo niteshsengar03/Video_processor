@@ -33,16 +33,21 @@ const upload = multer({storage:storage})
 //     res.header("Access-Control-Allow-Origin","*");
 // })
 
-app.get('/',function(req,res){
-    res.json({message:"hello world"})
-})
 
 app.post("/upload",upload.single('file') , function(req,res){
+    if(!req.file){
+        res.status(400).json({
+            msg:"No file uploaded"
+        })
+    }
     res.json({
         msg:"file uploaded"
     })
     // console.log("");
 })
+
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
